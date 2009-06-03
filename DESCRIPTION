@@ -1,0 +1,9 @@
+Package: rsap
+Version: 0.1.1
+Date: 2006-06-20
+Title: Basic Statistics and Data Analysis 
+Author: Timothy Hess <hesst@ripon.edu>
+Maintainer: Timothy Hess <hesst@ripon.edu>
+Description: Ripon Statistical Analysis Package
+License: GPL
+
