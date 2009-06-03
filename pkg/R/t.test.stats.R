@@ -33,7 +33,7 @@ t_test<-function(xbar,...){
       
 }
 
-
+### Default t_test function
 t_test.default<-function(xbar,sd,n,var.equal=F,alpha=.05,alternative=c("two.sided","less","greater"),method=c("p.value","conf.int","crit.val"),mu=0){
   alternative <- match.arg(alternative)
   method<-match.arg(method)
