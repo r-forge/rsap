@@ -3,9 +3,9 @@ t_test<-function(xbar,...){
 }
  t_test.formula<-function(formula,data,subset,...){
 
-  
+
       m <- match.call(expand.dots = FALSE)
-      if (is.matrix(eval(m$data, parent.frame()))) 
+      if (is.matrix(eval(m$data, parent.frame())))
         m$data <- as.data.frame(data)
     m[[1]] <- as.name("model.frame")
     m$... <- NULL
@@ -15,22 +15,18 @@ t_test<-function(xbar,...){
     names(mf) <- NULL
     response <- attr(attr(mf, "terms"), "response")
     g <- factor(mf[[-response]])
-    if (nlevels(g) != 2) 
+    if (nlevels(g) != 2)
         stop("grouping factor must have exactly 2 levels")
     DATA <- split(mf[[response]], g)
     names(DATA) <- c("x", "y")
-#    browser()
- #   xbr<-tapply(mf[,1],mf[,2],mean)
- #   s<-tapply(mf[,1],mf[,2],sd)
- #   nn<-tapply(mf[,1],mf[,2],length)
     xbr<- as.numeric(lapply(DATA,mean))
     s<- as.numeric(lapply(DATA,sd))
     nn<- as.numeric(lapply(DATA,length))
     names(xbr)<-levels(g)
-      
-    y<-do.call("t_test",c(list(xbr),list(s),list(nn),list(...))) 
+
+    y<-do.call("t_test",c(list(xbr),list(s),list(nn),list(...)))
     invisible(y)
-      
+
 }
 
 ### Default t_test function
@@ -76,14 +72,14 @@ t_test.default<-function(xbar,sd,n,var.equal=F,alpha=.05,alternative=c("two.side
     }
 
 
-  
+
   cvDR<-switch(alternative,
                two.sided=paste("Reject Ho: if t.obs <",tcv[1],"or if t.obs >",tcv[2],"\n"),
                less=paste("Reject Ho: if t.obs <",tcv[1],"\n"),
                greater=paste("Reject Ho: if t.obs >",tcv[1],"\n"))
 
   cvDR<-paste("df = ",round(df,4),"\n ",cvDR,sep="")
-  
+
   alt.txt<-switch(alternative,two.sided="\u2260",less="<",greater=">")
  if(twosamp){
    cat("Ho:  \u03bc1 = \u03bc","2\n",sep="")
@@ -120,7 +116,7 @@ t_test.default<-function(xbar,sd,n,var.equal=F,alpha=.05,alternative=c("two.side
                                                                                                                                               less=paste( " -INF , "  ,sprintf("%.4f",EST+unique(abs(tcv))*SE),sep=""),
                                                                                                                                               greater=paste( sprintf("%.4f",EST-unique(abs(tcv))*SE)," , INF ",sep="" )),")\n",sep="") )
 
-  
+
   cat(stat)
   pv <- switch(alternative,two.sided=2*pt(-abs(tobs),df),less=pt(tobs,df),greater=1-pt(tobs,df) )
 
